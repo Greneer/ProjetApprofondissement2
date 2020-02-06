@@ -19,8 +19,13 @@ namespace ProjetApprofondissement2
         int id;
         string name;
         string continent;
+
+        // Liste de pages
         List<Panel> pages = new List<Panel>();
 
+        /// <summary>
+        /// Constructeur de mon application
+        /// </summary>
         public Accueil()
         {
             InitializeComponent();
@@ -37,14 +42,22 @@ namespace ProjetApprofondissement2
         }
 
         // ---------------------------------------------------------------------------------------Accueil------------------------------------------------------------------------------------------------
-        // Quitte l'application
+        /// <summary>
+        /// Quitte l'application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
 
-        // Affiche la page principale du CRUD
+        /// <summary>
+        /// Affiche la page de mon CRUD
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonCrud_Click(object sender, EventArgs e)
         {
             HideAllPanels();
@@ -55,7 +68,11 @@ namespace ProjetApprofondissement2
 
         }
 
-        // Affiche la page de l'API
+        /// <summary>
+        /// Affiche la page de l'API
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonCountryApi_Click(object sender, EventArgs e)
         {
             HideAllPanels();
@@ -63,7 +80,9 @@ namespace ProjetApprofondissement2
             labelTitle.Text = "API";
         }
 
-        // Cache tous les panels
+        /// <summary>
+        /// Cache tous les panels
+        /// </summary>
         private void HideAllPanels()
         {
             for (int i = 0; i < pages.Count; i++)
@@ -73,35 +92,37 @@ namespace ProjetApprofondissement2
         }
 
         // ---------------------------------------------------------------------------------------CRUD------------------------------------------------------------------------------------------------
-        // Affiche toute les données la table de personne dans le datagridview
+        /// <summary>
+        /// Affiche toutes les données de la table "Utilisateur" dans le datagridView
+        /// </summary>
         private void DisplayDataCrud()
         {
             try
             {
-                adapter = new MySqlDataAdapter("SELECT id,prenom,nom,courriel,note FROM projetapprofondissement2.utilisateurs", connexion);
+                adapter = new MySqlDataAdapter("SELECT id,prenom,nom,courriel,note FROM projetapprofondissement2.personnes", connexion);
                 connexion.Open();
                 DataSet ds = new DataSet();
-                adapter.Fill(ds, "utilisateurs");
+                adapter.Fill(ds, "personnes");
 
-                dataGridViewListeUtilisateurs.DataSource = ds.Tables["utilisateurs"];
-                for (int i = 0; i < dataGridViewListeUtilisateurs.Columns.Count; i++)
+                dataGridViewListePersonnes.DataSource = ds.Tables["personnes"];
+                for (int i = 0; i < dataGridViewListePersonnes.Columns.Count; i++)
                 {
 
-                    string str = dataGridViewListeUtilisateurs.Columns[i].HeaderText;
+                    string str = dataGridViewListePersonnes.Columns[i].HeaderText;
                     switch (str)
                     {
                         case "id":
-                            dataGridViewListeUtilisateurs.Columns[i].HeaderText = "Id";
+                            dataGridViewListePersonnes.Columns[i].HeaderText = "Id";
                             break;
 
                         case "prenom":
-                            dataGridViewListeUtilisateurs.Columns[i].HeaderText = "Prénom";
+                            dataGridViewListePersonnes.Columns[i].HeaderText = "Prénom";
                             break;
                         case "nom":
-                            dataGridViewListeUtilisateurs.Columns[i].HeaderText = "Nom";
+                            dataGridViewListePersonnes.Columns[i].HeaderText = "Nom";
                             break;
                         case "courriel":
-                            dataGridViewListeUtilisateurs.Columns[i].HeaderText = "Courriel";
+                            dataGridViewListePersonnes.Columns[i].HeaderText = "Courriel";
                             break;
                         default:
                             break;
@@ -115,45 +136,10 @@ namespace ProjetApprofondissement2
                 connexion.Close();
             }
         }
-        // Affiche le formulaire de modification et met les valeurs courantes dans les bon champs.
-        private void buttonModifierPersonne_Click_1(object sender, EventArgs e)
-        {
-            try
-            {
-                if (id != 0)
-                {
-                    HideAllPanels();
-                    panelInfos.Show();
-                    adapter = new MySqlDataAdapter();
-                    string sql = "SELECT * FROM projetapprofondissement2.utilisateurs WHERE id=@id ";
-                    cmd = new MySqlCommand(sql, connexion);
-                    cmd.Parameters.AddWithValue("@id", id);
-                    adapter.SelectCommand = cmd;
-                    connexion.Open();
-
-                    DataTable table = new DataTable();
-                    adapter.Fill(table);
-
-                    BindingSource bSouce = new BindingSource();
-                    bSouce.DataSource = table;
-                    connexion.Close();
-                    textBoxInfoPrenom.Text = table.Rows[0].Field<string>("prenom");
-                    textBoxInfoNom.Text = table.Rows[0].Field<string>("nom");
-                    textBoxInfoCourriel.Text = table.Rows[0].Field<string>("courriel");
-                    richTextBoxInfoNote.Text = table.Rows[0].Field<string>("note");
-                }
-                else
-                {
-                    MessageBox.Show("Vous devez selectionner une personne");
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        // Retire les données des text box et remet le id à 0
+       
+        /// <summary>
+        /// Retire les données des Textbox de la page du CRUD et remet le ID à 0
+        /// </summary>
         private void ClearData()
         {
             id = 0;
@@ -163,15 +149,19 @@ namespace ProjetApprofondissement2
         }
 
    
-        // Sélectionne un champ dans le gridview et insert les champs dans les textbox
+        /// <summary>
+        /// Permet de sélectionner une personne dans le datagridview et d'afficher son nom dans les textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dataGridViewListeUtilisateurs_RowHeaderMouseClick_1(object sender, DataGridViewCellMouseEventArgs e)
         {
             try
             {
-                id = Convert.ToInt32(dataGridViewListeUtilisateurs.Rows[e.RowIndex].Cells[0].Value);
-                textBoxPrenom.Text = dataGridViewListeUtilisateurs.Rows[e.RowIndex].Cells[1].Value.ToString();
-                textBoxNom.Text = dataGridViewListeUtilisateurs.Rows[e.RowIndex].Cells[2].Value.ToString();
-                textBoxCourriel.Text = dataGridViewListeUtilisateurs.Rows[e.RowIndex].Cells[3].Value.ToString();
+                id = Convert.ToInt32(dataGridViewListePersonnes.Rows[e.RowIndex].Cells[0].Value);
+                textBoxPrenom.Text = dataGridViewListePersonnes.Rows[e.RowIndex].Cells[1].Value.ToString();
+                textBoxNom.Text = dataGridViewListePersonnes.Rows[e.RowIndex].Cells[2].Value.ToString();
+                textBoxCourriel.Text = dataGridViewListePersonnes.Rows[e.RowIndex].Cells[3].Value.ToString();
             }
             catch (Exception ex)
             {
@@ -185,7 +175,11 @@ namespace ProjetApprofondissement2
             DisplayDataCrud();
         }
 
-        // Supprime l'élément selectionné
+        /// <summary>
+        /// Supprime l'élément sélectionné
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSupprimer_Click(object sender, EventArgs e)
         {
             if (id != 0)
@@ -220,13 +214,17 @@ namespace ProjetApprofondissement2
             }
         }
 
-        // Recherche une personne selon son adresse courriel
+        /// <summary>
+        /// Recherche une personne selon son adresse courriel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonRechercher_Click_1(object sender, EventArgs e)
         {
             try
             {
                 adapter = new MySqlDataAdapter();
-                string sql = "SELECT id,prenom,nom,courriel FROM projetapprofondissement2.utilisateurs WHERE courriel=@courriel ";
+                string sql = "SELECT id,prenom,nom,courriel FROM projetapprofondissement2.personnes WHERE courriel=@courriel ";
                 cmd = new MySqlCommand(sql, connexion);
                 cmd.Parameters.AddWithValue("@courriel", textBoxCourriel.Text);
                 adapter.SelectCommand = cmd;
@@ -252,7 +250,7 @@ namespace ProjetApprofondissement2
                 }
                 else
                 {
-                    dataGridViewListeUtilisateurs.DataSource = table;
+                    dataGridViewListePersonnes.DataSource = table;
                 }
             }
             catch (Exception ex)
@@ -261,20 +259,27 @@ namespace ProjetApprofondissement2
             }
         }
 
-        // Affiche le formulaire d'ajout.
+
+        
+        // ---------------------------------------------------------------------------------------Ajouter------------------------------------------------------------------------------------------------
+
+
+        /// <summary>
+        /// Affiche le formulaire d'ajout
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonAjouter_Click_1(object sender, EventArgs e)
         {
             HideAllPanels();
             panelAjouter.Show();
         }
 
-        // Main source: https://www.c-sharpcorner.com/UploadFile/1e050f/insert-update-and-delete-record-in-datagridview-C-Sharp/
-
-
-       
-        // ---------------------------------------------------------------------------------------Ajouter------------------------------------------------------------------------------------------------
-
-        // Ajoute une personne à la base de données lorsque tous les champs sont remplis
+        /// <summary>
+        /// Ajoute une personne à la base de données lorsque tous les champs sont remplis
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2Ajouter_Click(object sender, EventArgs e)
         {
             if (textBoxAjouterPrenom.Text != "" && textBoxAjouterNom.Text != "" && textBoxAjouterCourriel.Text != "" && richTextBoxAjouterNote.Text != "")
@@ -322,6 +327,53 @@ namespace ProjetApprofondissement2
             }
         }
         // ---------------------------------------------------------------------------------------Modifier------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Affiche le formulaire de modificaiton et rempli les textBox avec les bonnes informations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonModifierPersonne_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                if (id != 0)
+                {
+                    HideAllPanels();
+                    panelInfos.Show();
+                    adapter = new MySqlDataAdapter();
+                    string sql = "SELECT * FROM projetapprofondissement2.personnes WHERE id=@id ";
+                    cmd = new MySqlCommand(sql, connexion);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    adapter.SelectCommand = cmd;
+                    connexion.Open();
+
+                    DataTable table = new DataTable();
+                    adapter.Fill(table);
+
+                    BindingSource bSouce = new BindingSource();
+                    bSouce.DataSource = table;
+                    connexion.Close();
+                    textBoxInfoPrenom.Text = table.Rows[0].Field<string>("prenom");
+                    textBoxInfoNom.Text = table.Rows[0].Field<string>("nom");
+                    textBoxInfoCourriel.Text = table.Rows[0].Field<string>("courriel");
+                    richTextBoxInfoNote.Text = table.Rows[0].Field<string>("note");
+                }
+                else
+                {
+                    MessageBox.Show("Vous devez selectionner une personne");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Modifie une personne lorsque les champs sont valides
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonModifier_Click(object sender, EventArgs e)
         {
             if (textBoxInfoPrenom.Text != "" && textBoxInfoNom.Text != "" && textBoxInfoCourriel.Text != "" && richTextBoxInfoNote.Text != "" && id != 0)
@@ -365,7 +417,11 @@ namespace ProjetApprofondissement2
         }
         // ---------------------------------------------------------------------------------------API------------------------------------------------------------------------------------------------
 
-        // Recherche les datas de l'api selon le champ remplis
+        /// <summary>
+        /// Recherche les datas dans l'api de pays selon le champ remplis
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonGetAllData_Click(object sender, EventArgs e)
         {
             try
@@ -423,6 +479,7 @@ namespace ProjetApprofondissement2
                 MessageBox.Show("L'information que vous avez entrer est invalide");
             }
         }
-       
+        // Main source: https://www.c-sharpcorner.com/UploadFile/1e050f/insert-update-and-delete-record-in-datagridview-C-Sharp/
+
     }
 }

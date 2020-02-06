@@ -76,7 +76,7 @@
             this.textBoxNom = new System.Windows.Forms.TextBox();
             this.textBoxPrenom = new System.Windows.Forms.TextBox();
             this.buttonSupprimer = new System.Windows.Forms.Button();
-            this.dataGridViewListeUtilisateurs = new System.Windows.Forms.DataGridView();
+            this.dataGridViewListePersonnes = new System.Windows.Forms.DataGridView();
             this.panelSideMenu.SuspendLayout();
             this.panelApi.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPays)).BeginInit();
@@ -84,7 +84,7 @@
             this.panelInfos.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelCrud.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewListeUtilisateurs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewListePersonnes)).BeginInit();
             this.SuspendLayout();
             // 
             // labelTitle
@@ -454,7 +454,7 @@
             this.panelCrud.Controls.Add(this.textBoxNom);
             this.panelCrud.Controls.Add(this.textBoxPrenom);
             this.panelCrud.Controls.Add(this.buttonSupprimer);
-            this.panelCrud.Controls.Add(this.dataGridViewListeUtilisateurs);
+            this.panelCrud.Controls.Add(this.dataGridViewListePersonnes);
             this.panelCrud.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelCrud.Location = new System.Drawing.Point(150, 29);
             this.panelCrud.Name = "panelCrud";
@@ -569,18 +569,18 @@
             this.buttonSupprimer.UseVisualStyleBackColor = false;
             this.buttonSupprimer.Click += new System.EventHandler(this.buttonSupprimer_Click);
             // 
-            // dataGridViewListeUtilisateurs
+            // dataGridViewListePersonnes
             // 
-            this.dataGridViewListeUtilisateurs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewListeUtilisateurs.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.dataGridViewListeUtilisateurs.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.dataGridViewListeUtilisateurs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewListeUtilisateurs.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dataGridViewListeUtilisateurs.Location = new System.Drawing.Point(0, 215);
-            this.dataGridViewListeUtilisateurs.Name = "dataGridViewListeUtilisateurs";
-            this.dataGridViewListeUtilisateurs.Size = new System.Drawing.Size(975, 324);
-            this.dataGridViewListeUtilisateurs.TabIndex = 14;
-            this.dataGridViewListeUtilisateurs.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewListeUtilisateurs_RowHeaderMouseClick_1);
+            this.dataGridViewListePersonnes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewListePersonnes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridViewListePersonnes.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.dataGridViewListePersonnes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewListePersonnes.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dataGridViewListePersonnes.Location = new System.Drawing.Point(0, 215);
+            this.dataGridViewListePersonnes.Name = "dataGridViewListePersonnes";
+            this.dataGridViewListePersonnes.Size = new System.Drawing.Size(975, 324);
+            this.dataGridViewListePersonnes.TabIndex = 14;
+            this.dataGridViewListePersonnes.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewListeUtilisateurs_RowHeaderMouseClick_1);
             // 
             // Accueil
             // 
@@ -608,7 +608,7 @@
             this.panelTop.ResumeLayout(false);
             this.panelCrud.ResumeLayout(false);
             this.panelCrud.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewListeUtilisateurs)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewListePersonnes)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -630,7 +630,7 @@
         private System.Windows.Forms.TextBox textBoxNom;
         private System.Windows.Forms.TextBox textBoxPrenom;
         private System.Windows.Forms.Button buttonSupprimer;
-        private System.Windows.Forms.DataGridView dataGridViewListeUtilisateurs;
+        private System.Windows.Forms.DataGridView dataGridViewListePersonnes;
         private System.Windows.Forms.Panel panelApi;
         private System.Windows.Forms.Label labelContinent;
         private System.Windows.Forms.TextBox textBoxContinent;
